@@ -1,16 +1,33 @@
-import React from 'react';
-import './TodoSearch.css';
+import React, { useEffect } from "react";
+import "./TodoSearch.css";
 
-function TodoSearch(props) {
+function TodoSearch({ todos, setTodos, originalTodos }) {
+  const [searchValue, setSearchValue] = React.useState("");
 
+  useEffect(() => {
+    if (searchValue.length > 1) {
+      filteredSearch(searchValue);
+    } else {
+      setTodos(originalTodos);
+    }
+  }, [searchValue, setTodos, originalTodos]);
+
+  const filteredSearch = (searchValue) => {
+    const filteredResult = todos.filter((todo) =>
+      todo.text.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    console.log('filteredResult >>', filteredResult);
+    console.log('searchValue >>', searchValue);
+    setTodos(filteredResult);
+  };
 
   return (
     <input
       placeholder="Search Todo"
       className="TodoSearch"
-      value={props.searchValue}
+      value={searchValue}
       onChange={(event) => {
-        props.setSearchValue(event.target.value)
+        setSearchValue(event.target.value);
       }}
     />
   );
