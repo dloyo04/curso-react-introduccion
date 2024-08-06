@@ -16,12 +16,9 @@ const defaultTodos = [
 function App() {
   const [todos, setTodos] = React.useState(defaultTodos);
 
-  const completedTodos = todos.filter(todo => todo.completed).length;
-  const totalTodos = todos.length;
-
   return (
     <div className='appContainer'>
-      <TodoCounter completed={completedTodos} total={totalTodos} />
+      <TodoCounter todos={todos}/>
       <TodoSearch todos={todos} originalTodos={defaultTodos} setTodos={setTodos} />
 
       <TodoList>
@@ -30,6 +27,8 @@ function App() {
             key={todo.text}
             text={todo.text}
             completed={todo.completed}
+            todos={todos}
+            setTodos={setTodos}
           />
         ))}
       </TodoList>
